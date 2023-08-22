@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Register</title>
+    <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- Font-->
+    <link rel="stylesheet" type="text/css" href="static/css/nunito-font.css">
+    <!-- Main Style Css -->
+    <link href="{{ url_for('static', path='css/style.css') }}" rel="stylesheet">
+    <style>
+        /* Apply styles to the navigation container or ul */
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+            /* Ensure content doesn't overflow */
+        }
+
+        /* Style the list items (links) */
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 30px;
+            text-align: right;
+            /* Align text to the right */
+        }
+
+        .navbar li {
+            display: inline-block;
+            /* Display list items horizontally */
+            margin-right: 20px;
+            /* Add some spacing between links */
+        }
+
+        /* Style the links */
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: large;
+        }
+
+        .newbody {
+            background-color: #4077c8;
+
+        }
+    </style>
+</head>
+
+<body class="form-v9 newbody">
+    <div class="navbar">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/account">Account</a></li>
+            <li><a href="/register">SignUp</a></li>
+            <li><a href="#">Contact</a></li>
+            <!-- Conditional "Logout" link -->
+            <!-- {% if authenticated %}
+            <li><a href="/account/logout">SignOut</a></li>
+            {% endif %} -->
+        </ul>
+    </div>
+    <div class="page-content">
+        <div class="form-v9-content" style="background-image: url('static/images/form-v9.jpg')">
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </div>
+</body>
+
+</html>

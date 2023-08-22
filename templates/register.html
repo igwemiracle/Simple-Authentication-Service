@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form class="form-detail" action="/register" method="post">
+    <h2>Registration Form</h2>
+    <div class="form-row-total">
+        <div class="form-row">
+            <input type="text" name="username" id="full-name" class="input-text" placeholder="Your Name" required>
+        </div>
+        <div class="form-row">
+            <input type="text" name="email" id="your-email" class="input-text" placeholder="Your Email" required
+                pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
+        </div>
+    </div>
+    <div class="form-row-total">
+        <div class="form-row">
+            <input type="password" name="password" id="password" class="input-text" placeholder="Your Password"
+                required>
+        </div>
+        <div class="form-row">
+            <input type="password" name="confirm_password" id="comfirm-password" class="input-text"
+                placeholder="Comfirm Password" required>
+            {% if error_msg %}
+            <p class="para"">{{ error_msg }}</p>
+                {% endif %}
+                    </div>
+                </div>
+                <div class=" form-row-last">
+
+                <input type="submit" name="register" class="register" value="Register">
+        </div>
+</form>
+{% endblock content %}
