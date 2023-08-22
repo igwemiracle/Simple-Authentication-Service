@@ -21,13 +21,13 @@
             <input type="password" name="confirm_password" id="comfirm-password" class="input-text"
                 placeholder="Comfirm Password" required>
             {% if error_msg %}
-            <p class="para"">{{ error_msg }}</p>
-                {% endif %}
-                    </div>
-                </div>
-                <div class=" form-row-last">
-
-                <input type="submit" name="register" class="register" value="Register">
+            <p style="color: red; margin-top: 2px;">{{ error_msg }}</p>
+            {% endif %}
         </div>
+    </div>
+    <div class=" form-row-last">
+
+        <input type="submit" name="register" class="register" value="Register">
+    </div>
 </form>
 {% endblock content %}
