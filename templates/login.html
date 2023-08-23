@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div style="margin-left: 250px;">
+    <form class="form-detail" action="/account/login" method="post">
+
+        <h2 style="margin-right: 250px;">Login Form</h2>
+        <div class="form-row-total">
+            <div class="form-row">
+                <input type="text" name="email" id="your-email" class="input-text" placeholder="Your Email" required
+                    pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
+            </div>
+        </div>
+        <div class="form-row-total">
+            <div class="form-row">
+                <input type="password" name="password" id="password" class="input-text" placeholder="Your Password"
+                    required>
+                {% if error_message %}
+                <p style="color: red; margin-top: 2px; white-space: nowrap;">{{ error_message }}</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class=" form-row-last">
+
+            <input type="submit" name="register" class="register" value="Login" style="margin-right: 255px;">
+        </div>
+    </form>
+</div>
+{% endblock content%}
