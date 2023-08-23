@@ -1,5 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Welcome to Your Home Page</h1>
+<style>
+    li {
+        font-size: larger;
+        margin-left: 50px;
+    }
+</style>
+<h1 style="text-align: center;">Welcome to Your Home Page</h1>
+<ul>
+    <li>Home: My home page.</li>
+    <li>Login: Login with user's registered email and password.</li>
+    <li>Register: To register a new user.</li>
+    <li>About: About page.</li>
+</ul>
 {% endblock content %}
