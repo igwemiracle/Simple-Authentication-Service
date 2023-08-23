@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% if not loggedin %}
+<h1>Welcome to Account Page</h1>
+{% endif %}
+{% if loggedin %}
 <h1>Welcome {{username}} to Your Account Page</h1>
+{% endif %}
 {% endblock content %}
