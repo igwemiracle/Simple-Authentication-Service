@@ -7,9 +7,11 @@
     <!-- Mobile Specific Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <!-- Font-->
-    <link rel="stylesheet" type="text/css" href="static/css/nunito-font.css">
+    <link href="{{ url_for('static', path='/css/nunito-font.css') }}" rel="stylesheet">
+
+    <!-- <link rel="stylesheet" type="text/css" href="/css/nunito-font.css"> -->
     <!-- Main Style Css -->
-    <link href="{{ url_for('static', path='css/style.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', path='/css/style.css') }}" rel="stylesheet">
     <style>
         /* Apply styles to the navigation container or ul */
         .navbar {
@@ -53,17 +55,23 @@
     <div class="navbar">
         <ul>
             <li><a href="/">Home</a></li>
+            {% if not loggedin %}
+            <li><a href="#">Login</a></li>
+            <li><a href="/account/register">Register</a></li>
+            {% endif %}
+            {% if loggedin %}
             <li><a href="/account">Account</a></li>
-            <li><a href="/register">SignUp</a></li>
+            <li><a href="/account/logout">Logout</a></li>
+            {% endif %}
             <li><a href="#">Contact</a></li>
-            <!-- Conditional "Logout" link -->
-            <!-- {% if authenticated %}
-            <li><a href="/account/logout">SignOut</a></li>
-            {% endif %} -->
+
+
+
+
         </ul>
     </div>
     <div class="page-content">
-        <div class="form-v9-content" style="background-image: url('static/images/form-v9.jpg')">
+        <div class="form-v9-content" style="background-image: url('/static/images/form-v9.jpg');">
             {% block content %}
             {% endblock content %}
         </div>
