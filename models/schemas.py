@@ -10,3 +10,6 @@ class UserCreate(BaseModel):
     hash_password: str
     confirm_password: str
     is_logged_in: bool
+
+class ForgotPassword(BaseModel):
+    email:str
