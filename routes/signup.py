@@ -6,12 +6,13 @@ from sqlalchemy import select
 from models.sqlDATA import User
 from fastapi.templating import Jinja2Templates
 from authenticate.hash_pwd import HashPassword
+from routes import crud
+
 
 hashThisPassword = HashPassword()
 
 signup = APIRouter()
 templates = Jinja2Templates(directory="templates")
-
 
 @signup.get("/")
 async def renderHomePage(request: Request):
@@ -40,51 +41,29 @@ async def registerUser(request: Request,
                        password: str = Form(...),
                        confirm_password: str = Form(...),
                        db: AsyncSession = Depends(get_db)):
+
+    user_exist = await crud.find_user_exist(email=email, db=db)
+    if user_exist:
+        error_message = "Email already exists. Please use a different email."
+        return templates.TemplateResponse(
+        "register.html",
+        {"request": request, "error_message": error_message},
+        status_code=status.HTTP_400_BAD_REQUEST,
+    )
+
     if password != confirm_password:
         error_msg = "Invalid password,please confirm password again."
         return templates.TemplateResponse(
             "register.html",
-            {"request": request, "error_msg": error_msg}
-        )
+            {"request": request, "error_msg": error_msg},
+        status_code=status.HTTP_404_NOT_FOUND)
     # Hash my password
     hashed_password = hashThisPassword.create_hash(password)
+    confirm_hash = hashThisPassword.create_hash(confirm_password)
     dbUser = User(username=username, email=email,
-                  hash_password=hashed_password, confirm_password=confirm_password)
+                  hash_password=hashed_password, confirm_password=confirm_hash)
     db.add(dbUser)
     await db.commit()
     await db.refresh(dbUser)
     return RedirectResponse(url=f"/account?username={username}&loggedin=True",
                             status_code=status.HTTP_303_SEE_OTHER)
-
-
-@signup.get("/account/login")
-async def renderLoginPage(request: Request):
-    return templates.TemplateResponse("login.html", {"request": request})
-
-
-@signup.post("/account/login")
-async def loginPage(request: Request,
-                    email: str = Form(...),
-                    password: str = Form(...), db: AsyncSession = Depends(get_db)):
-    user = await db.execute(select(User).where(User.email == email))
-    db_user = user.scalar()
-
-    if not db_user:
-        error_message = "The account does not exist or the password is wrong."
-        return templates.TemplateResponse("login.html", {"request": request, "error_message": error_message})
-
-    if not hashThisPassword.verify_hash(password, db_user.hash_password):
-        error_message = "The account does not exist or the password is wrong."
-        return templates.TemplateResponse("login.html", {"request": request, "error_message": error_message})
-
-    response = RedirectResponse(
-        url=f"/account?username={db_user.username}&loggedin=True",  status_code=status.HTTP_302_FOUND)
-    return response
-
-
-@signup.get("/account/logout")
-async def renderLogoutPage():
-    response = RedirectResponse(
-        url="/", status_code=status.HTTP_302_FOUND
-    )
-    return response
