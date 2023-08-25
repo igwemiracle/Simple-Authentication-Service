@@ -3,19 +3,22 @@ import uuid
 from fastapi import Depends, APIRouter, Form, HTTPException, Request, status
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
-from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from Database.connection import get_db
 from models.schemas import ForgotPassword
 from authenticate.hash_pwd import HashPassword
-from models.sqlDATA import User
 from authenticate import cookie_auth
 from routes import crud
+from email_notification.send_email import EmailSender
+
+
 
 hashThisPassword = HashPassword()
 
+
 templates = Jinja2Templates(directory="templates")
 login = APIRouter()
+
 
 
 @login.get("/account/login")
@@ -50,14 +53,3 @@ async def renderLogoutPage():
     )
     cookie_auth.logout(response)
     return response
-#============================================================================
-@login.post("/account/login/forgot_password")
-async def forgot_password(request:ForgotPassword,
-                          db:AsyncSession=Depends(get_db)):
-    #check if user exist
-    user_exist = await crud.find_user_exist(request.email, db=db)
-    if not user_exist:
-        raise HTTPException(status_code=404, detail="User not found")
-    
-    reset_code = str(uuid.uuid1())
-    return reset_code
