@@ -1,17 +1,12 @@
 import asyncio
-import uuid
 from fastapi import Depends, APIRouter, Form, HTTPException, Request, status
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.ext.asyncio import AsyncSession
 from Database.connection import get_db
-from models.schemas import ForgotPassword
 from authenticate.hash_pwd import HashPassword
 from authenticate import cookie_auth
 from routes import crud
-from email_notification.send_email import EmailSender
-
-
 
 hashThisPassword = HashPassword()
 
@@ -21,16 +16,16 @@ login = APIRouter()
 
 
 
-@login.get("/account/login")
+@login.get("/auth/login")
 async def renderLoginPage(request: Request):
     return templates.TemplateResponse("login.html", {"request": request})
 
 
-@login.post("/account/login")
+@login.post("/auth/login")
 async def loginPage(request: Request,
                     email: str = Form(...),
                     password: str = Form(...), db: AsyncSession = Depends(get_db)):
-    user = await crud.find_user_exist(email=email, db=db)
+    user = await crud.findUserExist(email=email, db=db)
     if not user:
         await asyncio.sleep(5)
         error_message = "The account does not exist or the password is wrong."
@@ -46,7 +41,7 @@ async def loginPage(request: Request,
     return response
 
 
-@login.get("/account/logout")
+@login.get("/auth/logout")
 async def renderLogoutPage():
     response = RedirectResponse(
         url="/", status_code=status.HTTP_302_FOUND
