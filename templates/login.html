@@ -2,8 +2,15 @@
 
 
 {% block content %}
+
+<style>
+    a {
+        margin-left: 80px;
+        color: whitesmoke;
+    }
+</style>
 <div style="margin-left: 250px;">
-    <form class="form-detail" action="/account/login" method="post">
+    <form class="form-detail" action="/auth/login" method="post">
 
         <h2 style="margin-right: 250px;">Login Form</h2>
         <div class="form-row-total">
@@ -25,6 +32,8 @@
 
             <input type="submit" name="register" class="register" value="Login" style="margin-right: 255px;">
         </div>
+        <p><a href="/auth/forgot_password" class="move-up"> Forgot password?</a></p>
     </form>
+
 </div>
 {% endblock content%}

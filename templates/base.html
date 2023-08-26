@@ -44,9 +44,13 @@
             font-size: large;
         }
 
-        .newbody {
-            background-color: #4077c8;
+        .edit {
+            background: #0086E5;
+        }
 
+        .newbody {
+            background-color: #0086E5;
+            ;
         }
     </style>
 </head>
@@ -56,21 +60,17 @@
         <ul>
             <li><a href="/">Home</a></li>
             {% if not loggedin %}
-            <li><a href="/account/login">Login</a></li>
-            <li><a href="/account/register">Register</a></li>
+            <li><a href="/auth/login">Login</a></li>
+            <li><a href="/auth/register">Register</a></li>
             {% endif %}
             {% if loggedin %}
             <li><a href="/account">Account</a></li>
-            <li><a href="/account/logout">Logout</a></li>
+            <li><a href="/auth/logout">Logout</a></li>
             {% endif %}
             <li><a href="#">About</a></li>
-
-
-
-
         </ul>
     </div>
-    <div class="page-content">
+    <div class="page-content edit">
         <div class="form-v9-content" style="background-image: url('/static/images/form-v9.jpg');">
             {% block content %}
             {% endblock content %}

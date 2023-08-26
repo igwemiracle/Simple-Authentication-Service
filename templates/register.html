@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!-- <form class="form-detail" action="/account/register" method="post"> -->
-<form class="form-detail" action="/account/register" method="post">
+<!-- <form class="form-detail" action="/auth/register" method="post"> -->
+<form class="form-detail" action="/auth/register" method="post">
 
     <h2>Registration Form</h2>
     <div class="form-row-total">
@@ -23,10 +23,11 @@
             <input type="password" name="confirm_password" id="comfirm-password" class="input-text"
                 placeholder="Comfirm Password" required>
             {% if error_msg%}
-            <p style="color: red; margin-top: 2px;">{{ error_msg }}</p>
+            <p style="color: rgba(255, 0, 50, 0.749); margin-top: 2px;">{{ error_msg }}</p>
             {% endif %}
             {% if error_message%}
-            <p style="color: red; margin-top: 2px;margin-left: 50px;padding-left: 50px;">{{ error_message }}</p>
+            <p style="color: rgba(255, 0, 50, 0.749); margin-top: 2px;margin-left: 50px;padding-left: 50px;">{{
+                error_message }}</p>
             {% endif %}
         </div>
     </div>
