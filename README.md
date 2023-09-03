@@ -8,3 +8,5 @@ This is a simple authentication service
 > - FastAPI
 > - Sqlalchemy
 > - Jinja Templating engine
+> - Implemented a forgot-password and reset-password functionality
+> - Able to send an email message to the user with with reset-password link
